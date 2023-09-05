@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body{
+            background-color: rgb(25, 25, 25);
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .title{
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .move-icons{
+            padding: 20px;
+        }
+        .move-icon{
+            border: 1px solid aliceblue;
+            width: 80px;
+            height: 80px;
+            border-radius: 100px;
+            padding: 40px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <h1 class="title
+    ">Rock Paper Scissors</h1>
+    <p>You VS Computer</p>
+    <p class="js-score">Score: Wins: 0 Losses: 0 Ties: 0</p>
+    <div class="move-icons">
+        <input type="image" class="move-icon" src="rock-emoji.png" alt="rock" onclick="start_game('Rock')">
+        <input type="image" class="move-icon" src="paper-emoji.png" alt="paper" onclick="start_game('Paper')">
+        <input type="image" class="move-icon" src="scissors-emoji.png" alt="scissors" onclick="start_game('Scissors')">
+    </div>
+    <button class="reset_button" onclick="start_game('reset')">
+        Reset Score
+    </button>
+</body>
+
+<script>
+    let wins = 0, losses = 0, ties = 0;
+
+    function get_computer_choice(){
+        const choices = ['Rock', 'Paper', 'Scissors']
+        return choices[Math.floor(Math.random() * choices.length)]
+    }
+
+    function start_game(userChoice) {
+        const computerChoice = get_computer_choice();
+        let result = '';
+        const vsElement = document.querySelector('p')
+        const scoreElement = document.querySelector('.js-score');
+
+        if (computerChoice !== 'reset') {
+            if (userChoice === 'Rock') {
+                if (computerChoice === 'Rock') {
+                    ties += 1;
+                    result = 'tie';
+                } else if (computerChoice === 'Paper') {
+                    losses += 1;
+                    result = 'lose';
+                } else if (computerChoice === 'Scissors') {
+                    wins += 1;
+                    result = 'win';
+                }
+                vsElement.innerText = (`You: ${userChoice} VS Computer: ${computerChoice}`)
+            } else if (userChoice === 'Paper') {
+                if (computerChoice === 'Paper') {
+                    ties += 1;
+                    result = 'tie';
+                } else if (computerChoice === 'Scissors') {
+                    losses += 1;
+                    result = 'lose';
+                } else if (computerChoice === 'Rock') {
+                    wins += 1;
+                    result = 'win';
+                }
+                vsElement.innerText = (`You: ${userChoice} VS Computer: ${computerChoice}`)
+            } else if (userChoice === 'Scissors') {
+                if (computerChoice === 'Scissors') {
+                    ties += 1;
+                    result = 'tie';
+                } else if (computerChoice === 'Rock') {
+                    losses += 1;
+                    result = 'lose';
+                } else if (computerChoice === 'Paper') {
+                    wins += 1;
+                    result = 'win';
+                }
+                vsElement.innerText = (`You: ${userChoice} VS Computer: ${computerChoice}`)
+            } else {
+                losses = 0;
+                wins = 0;
+                ties = 0;
+                vsElement.innerText = ('You reset the score')
+            } 
+        }
+        scoreElement.innerText = (`Score: Wins: ${wins} Losses: ${losses} Ties: ${ties}`);
+    }
+</script>
+</html>

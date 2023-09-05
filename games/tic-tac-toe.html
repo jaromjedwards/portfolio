@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+        }
+        button {
+            font-size: 24px;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-board"></div>
+
+    <script>
+        const board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', ''],
+        ];
+        let currentLetter = 'X';
+        let currentWinner = null;
+
+        function createBoard() {
+            const gameBoard = document.getElementById('game-board');
+            board.forEach((row, r) => {
+                row.forEach((spot, c) => {
+                    const button = document.createElement('button');
+                    button.classList.add('spot');
+                    button.onclick = (e) => placeLetter(r, c, e);
+                    gameBoard.appendChild(button);
+                });
+            });
+        }
+        
+        createBoard();
+
+        function placeLetter(r, c, e) {
+            if (board[r][c] || currentWinner) {
+                return;
+            }
+            board[r][c] = currentLetter;
+            e.target.innerText = currentLetter;
+            if (checkWinner()) {
+                currentWinner = currentLetter;
+                const message = document.createElement('div');
+                message.innerText = `${currentWinner} wins!`;
+                document.body.appendChild(message);
+                const resetButton = document.createElement('button');
+                resetButton.onclick = reset;
+                resetButton.innerText = 'Play again';
+                document.body.appendChild(resetButton);
+            } else if (isBoardFull()) {
+                const message = document.createElement('div');
+                message.innerText = 'It\'s a tie!';
+                document.body.appendChild(message);
+                const resetButton = document.createElement('button');
+                resetButton.onclick = reset;
+                resetButton.innerText = 'Play again';
+                document.body.appendChild(resetButton);
+            }
+            currentLetter = (currentLetter === 'X') ? 'O' : 'X';
+        }
+
+        function checkWinner() {
+            for (const row of board) {
+                if (row.every(val => (val === row[0] && val !== ''))) {
+                    return true;
+                }
+            }
+
+            for (let c = 0; c < board[0].length; c++) {
+                const col = board.map(row => row[c]);
+                if (col.every(val => (val === col[0] && val !== ''))) {
+                    return true;
+                }
+            }
+
+            if (board[1][1]) {
+                if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+                    return true;
+                }
+                if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function isBoardFull() {
+            return board.every(row => row.every(val => val !== ''));
+        }
+
+        function reset() {
+            currentLetter = 'X';
+            currentWinner = null;
+            board.forEach(row => row.fill(''));
+            const spots = document.querySelectorAll('.spot');
+            spots.forEach(spot => spot.innerText = '');
+            const messages = document.querySelectorAll('div');
+            messages.forEach(message => message.remove());
+            location.reload();
+        }
+
+
+
+    </script>
+
+</body>
+</html>

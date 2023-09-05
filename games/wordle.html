@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+</head>
+<body>
+    <h1>Wordle</h1>
+    <p>Hint</p>
+    <form>
+        <label>What is your guess?</label>
+        <input type="text" id="guess" onkeyup="wordle(this.value)"> 
+    </form>
+    
+</body>
+
+<script>
+
+    const words = ['hello', 'jarom', 'kayla', 'hunger', 'games', 'peeta'];
+    let word = words[Math.floor(Math.random()*words.length)];
+
+    function wordle(guess) {
+        if (guess === word){
+            console.log('great')
+        }
+    }
+
+
+
+</script>
+
+</html>
