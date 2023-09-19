@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operators</title>
+</head>
+<body>
+    <label for="age">Enter your Age</label>
+    <input id="age"/>
+    <script>
+        const age = document.getElementById("age")
+            .value;
+        const agePlus10 = parseInt(age) + 10;
+        console.log(agePlus10)
+
+
+
+        let add = 1 + 1
+        let mult = 3 * 3
+        let sub = 9 - 5
+        let strings = 'Hello' + ' World!'
+        let num = 1;
+        num += 3;
+        console.log(num)
+        console.log(num == sub ? true : false)
+        console.log(mult < add ? true : false)
+        console.log(num != strings ? true : false)
+        console.log(num > 10 ? true : false)
+    </script>
+</body>
+</html>

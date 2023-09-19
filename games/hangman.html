@@ -7,39 +7,24 @@
 </head>
 <body>
     <h1>Hangman</h1>
-    <button onclick="const letters = (hangman())">New Game</button>
-    <div>
-        <button class="alphabet" onclick="checkForLetter('A', letters)">A</button>
-        <button class="alphabet" onclick="checkForLetter('B', letters)">B</button>
-        <button class="alphabet" onclick="checkForLetter('C', letters)">C</button>
-        <button class="alphabet" onclick="checkForLetter('D', letters)">D</button>
-        <button class="alphabet" onclick="checkForLetter('E', letters)">E</button>
-        <button class="alphabet" onclick="checkForLetter('F', letters)">F</button>
-        <button class="alphabet" onclick="checkForLetter('G', letters)">G</button>
-        <button class="alphabet" onclick="checkForLetter('H', letters)">H</button>
-        <button class="alphabet" onclick="checkForLetter('I', letters)">I</button>
-        <button class="alphabet" onclick="checkForLetter('J', letters)">J</button>
-        <button class="alphabet" onclick="checkForLetter('K', letters)">K</button>
-        <button class="alphabet" onclick="checkForLetter('L', letters)">L</button>
-        <button class="alphabet" onclick="checkForLetter('M', letters)">M</button>
-        <button class="alphabet" onclick="checkForLetter('N', letters)">N</button>
-        <button class="alphabet" onclick="checkForLetter('O', letters)">O</button>
-        <button class="alphabet" onclick="checkForLetter('P', letters)">P</button>
-        <button class="alphabet" onclick="checkForLetter('Q', letters)">Q</button>
-        <button class="alphabet" onclick="checkForLetter('R', letters)">R</button>
-        <button class="alphabet" onclick="checkForLetter('S', letters)">S</button>
-        <button class="alphabet" onclick="checkForLetter('T', letters)">T</button>
-        <button class="alphabet" onclick="checkForLetter('U', letters)">U</button>
-        <button class="alphabet" onclick="checkForLetter('V', letters)">V</button>
-        <button class="alphabet" onclick="checkForLetter('W', letters)">W</button>
-        <button class="alphabet" onclick="checkForLetter('X', letters)">X</button>
-        <button class="alphabet" onclick="checkForLetter('Y', letters)">Y</button>
-        <button class="alphabet" onclick="checkForLetter('Z', letters)">Z</button>
-        
-    </div>
+    <button onclick="const letters = (hangman())">New Game</button> 
+    <div id="button-container" ></div>
 </body>
 
     <script>
+        function createButtons() {
+            const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+            const buttonContainer = document.getElementById('button-container'); // Assuming you have an HTML element with id 'button-container' to append buttons to.
+
+            for (let i = 0; i < alphabet.length; i++) {
+                const letter = alphabet[i];
+                const button = document.createElement('button');
+                button.textContent = letter;
+                buttonContainer.appendChild(button);
+            }
+        }
+        createButtons();
+
         function hangman() {
            // user pushes buttons which return a letter
            // if the letter is the same as a letter from the split word
