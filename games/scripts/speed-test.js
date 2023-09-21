@@ -3,20 +3,6 @@ const userInput = document.getElementById('userInput');
 const sentenceDisplay = document.getElementById('sentence');
 const scoreDisplay = document.getElementById('score');
 
-// Initialize the game when the start button is clicked
-function startGame() {
-    userInput.value = '';
-    const startTime = getTime();
-    const sentence = getSentence();
-
-    userInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            const endTime = getTime();
-            const { speed, sentenceScore } = updateScore(sentence, userInput.value, startTime, endTime);
-        }
-    });
-}
-
 // Define sentences
 const sentences = [
     "The quick brown fox jumped over the lazy dog",
@@ -31,6 +17,22 @@ const sentences = [
     "The early bird catches the worm"
 ];
 
+// Initialize the game when the start button is clicked
+function startGame() {
+    scoreDisplay.textContent = 'Score'
+    userInput.value = '';
+    const startTime = getTime();
+    const sentence = getSentence();
+
+    userInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            const endTime = getTime();
+            const { speed, difference, score } = updateScore(sentence, userInput.value, startTime, endTime);
+            displayScore(speed, difference, score);
+        }
+    });
+}
+
 // Get a random sentence and display it
 function getSentence() {
     const sentenceNumber = Math.floor(Math.random() * sentences.length);
@@ -39,50 +41,32 @@ function getSentence() {
     return sentence;
 }
 
-// Update the score and display it
+// Update the score and return speed, difference, and score
 function updateScore(sentence, userInput, startTime, endTime) {
     const difference = compareSentences(sentence, userInput);
-    // const isCorrect = (userInput === sentence);
-    const speed = (endTime - startTime);
-    const speedWithDecimal = (speed / 1000).toFixed(2);
-    // const correctSentenceScore = 10;
-    // const incorrectSentenceScore = -10;
-    const speedWeight = -400.5; // Use a negative value for higher scores with faster speed.
+    const speed = (endTime - startTime) / 1000;
+    const speedWeight = -400.5;
     const mistakesWeight = -550;
-    const startNumber = 100000
-
-    // Calculate the score with a negative speedWeight for higher scores with faster speed.
-    // let score = speedWeight * speed + sentenceScore - (difference * mistakesWeight);
-    let score = startNumber + (speedWeight * speedWithDecimal) + (difference * mistakesWeight);
-    console.log(speedWeight * speedWithDecimal)
-    console.log(difference * mistakesWeight)
-    // score won't be lower than 0
-    // score = (score < 0) ? 0 : score
-    scoreDisplay.textContent = `Your time was ${speed}ms, and you had ${difference} mistakes. Your score is ${score.toFixed(2)}`;
-    return speed
+    const startNumber = 100000;
+    const score = startNumber + (speedWeight * speed) + (difference * mistakesWeight);
+    return { speed, difference, score };
 }
 
-
-
-
+// Display the score
+function displayScore(speed, difference, score) {
+    scoreDisplay.textContent = `Your time was ${speed.toFixed(2)}s, and you had ${difference} mistakes. Your score is ${score.toFixed(2)}`;
+}
 
 // Get the current time in milliseconds
 function getTime() {
-    const currentDateTime = new Date();
-    const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
-    const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
-    const milliseconds = currentDateTime.getMilliseconds().toString().padStart(3, '0');
-    return parseInt(`${minutes}${seconds}${milliseconds}`);
+    return Date.now();
 }
 
 // Compare the user input with the given sentence and return the number of differences
 function compareSentences(sentence, inputValue) {
-    let sentenceLetters = sentence.split('');
-    let userInputLetters = inputValue.split('');
     let difference = 0;
-
-    for (let i = 0; i < sentenceLetters.length; i++) {
-        if (sentenceLetters[i] !== userInputLetters[i]) {
+    for (let i = 0; i < sentence.length; i++) {
+        if (sentence[i] !== inputValue[i]) {
             difference += 1;
         }
     }
