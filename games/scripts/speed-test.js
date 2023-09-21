@@ -47,7 +47,7 @@ function updateScore(sentence, userInput, startTime, endTime) {
     const speedWithDecimal = (speed / 1000).toFixed(2);
     // const correctSentenceScore = 10;
     // const incorrectSentenceScore = -10;
-    const speedWeight = -400; // Use a negative value for higher scores with faster speed.
+    const speedWeight = -400.5; // Use a negative value for higher scores with faster speed.
     const mistakesWeight = -550;
     const startNumber = 100000
 
