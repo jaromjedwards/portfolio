@@ -1,20 +1,24 @@
-function startGame(){
+// Declare variables and initialize DOM elements
+const userInput = document.getElementById('userInput');
+const sentenceDisplay = document.getElementById('sentence');
+const scoreDisplay = document.getElementById('score');
+
+// Initialize the game when the start button is clicked
+function startGame() {
     userInput.value = '';
-    startTime = getTime();
-    sentence = getSentence();
+    const startTime = getTime();
+    const sentence = getSentence();
+
     userInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            endTime = getTime();
-            speed = (endTime - startTime)
-            sentenceScore = compareSentences(sentence, userInput)
-            // for some reason, it logs the time once more every time it is done
-            updateScore(sentence, userInput, speed);
+            const endTime = getTime();
+            const { speed, sentenceScore } = updateScore(sentence, userInput.value, startTime, endTime);
         }
     });
 }
 
-function getSentence(){
-    const sentences = [
+// Define sentences
+const sentences = [
     "The quick brown fox jumped over the lazy dog",
     "Peter Piper picked a peck of pickled peppers",
     "How much wood would a woodchuck chuck if a woodchuck could chuck wood?",
@@ -26,35 +30,61 @@ function getSentence(){
     "All that glitters is not gold",
     "The early bird catches the worm"
 ];
-    let sentenceNumber = Math.floor(Math.random() * sentences.length);
-    let sentence = sentences[sentenceNumber];
-    let sentenceElement = document.getElementById('sentence');
-    sentenceElement.textContent = sentence;
-    return sentence
+
+// Get a random sentence and display it
+function getSentence() {
+    const sentenceNumber = Math.floor(Math.random() * sentences.length);
+    const sentence = sentences[sentenceNumber];
+    sentenceDisplay.textContent = sentence;
+    return sentence;
 }
 
-function updateScore(sentence, userInput, speed) {
-    
-    let inputValue = userInput.value;
-    let scoreElement = document.getElementById('score');
-    scoreElement.textContent = (inputValue === sentence) ? `${speed}` : 'Not a match';
+// Update the score and display it
+function updateScore(sentence, userInput, startTime, endTime) {
+    const difference = compareSentences(sentence, userInput);
+    // const isCorrect = (userInput === sentence);
+    const speed = (endTime - startTime);
+    const speedWithDecimal = (speed / 1000).toFixed(2);
+    // const correctSentenceScore = 10;
+    // const incorrectSentenceScore = -10;
+    const speedWeight = -400; // Use a negative value for higher scores with faster speed.
+    const mistakesWeight = -550;
+    const startNumber = 100000
 
+    // Calculate the score with a negative speedWeight for higher scores with faster speed.
+    // let score = speedWeight * speed + sentenceScore - (difference * mistakesWeight);
+    let score = startNumber + (speedWeight * speedWithDecimal) + (difference * mistakesWeight);
+    console.log(speedWeight * speedWithDecimal)
+    console.log(difference * mistakesWeight)
+    // score won't be lower than 0
+    // score = (score < 0) ? 0 : score
+    scoreDisplay.textContent = `Your time was ${speed}ms, and you had ${difference} mistakes. Your score is ${score.toFixed(2)}`;
+    return speed
 }
 
-function getTime(){
+
+
+
+
+// Get the current time in milliseconds
+function getTime() {
     const currentDateTime = new Date();
-
-    // Get minutes, seconds, and milliseconds as strings with leading zeros
-    let minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
-    let seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
-    let milliseconds = currentDateTime.getMilliseconds().toString().padStart(3, '0');
-
-    timeStamp = parseInt(`${minutes}${seconds}${milliseconds}`);
-    return timeStamp
+    const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
+    const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
+    const milliseconds = currentDateTime.getMilliseconds().toString().padStart(3, '0');
+    return parseInt(`${minutes}${seconds}${milliseconds}`);
 }
 
-function compareSentences(){
-    
-    console.log(sentence)
-    console.log(userInput)
+// Compare the user input with the given sentence and return the number of differences
+function compareSentences(sentence, inputValue) {
+    let sentenceLetters = sentence.split('');
+    let userInputLetters = inputValue.split('');
+    let difference = 0;
+
+    for (let i = 0; i < sentenceLetters.length; i++) {
+        if (sentenceLetters[i] !== userInputLetters[i]) {
+            difference += 1;
+        }
+    }
+    return difference;
 }
