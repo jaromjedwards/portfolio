@@ -7,50 +7,12 @@
 </head>
 <body>
     <h1>Hangman</h1>
-    <button onclick="const letters = (hangman())">New Game</button> 
-    <div id="button-container" ></div>
+    <button onclick="startNewGame()">New Game</button>
+    <div id="button-container"></div>
+    <div id="word-display"></div>
+    <p id="guesses-left">Guesses left: <span id="guess-count">6</span></p>
+
+
+    <script src='scripts/hangman.js'></script>
 </body>
-
-    <script>
-        function createButtons() {
-            const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-            const buttonContainer = document.getElementById('button-container'); // Assuming you have an HTML element with id 'button-container' to append buttons to.
-
-            for (let i = 0; i < alphabet.length; i++) {
-                const letter = alphabet[i];
-                const button = document.createElement('button');
-                button.textContent = letter;
-                buttonContainer.appendChild(button);
-            }
-        }
-        createButtons();
-
-        function hangman() {
-           // user pushes buttons which return a letter
-           // if the letter is the same as a letter from the split word
-           // make it appear on the screen in the order it should
-
-            //create a list of words
-            const words = ['hello', 'jarom', 'kayla', 'hunger', 'games', 'peeta'];
-            // choose a random word from the list
-            let word = words[Math.floor(Math.random() * words.length)];
-            // and split the word into letters
-            letters = []
-            // put the letters into an array
-            for (const a of word) {
-                letters.push(a)
-                console.log(letters)}
-            console.log(letters)
-            // return the letters
-            return letters
-        }
-        function checkForLetter(letter, letters){
-            let letterLower = letter.toLowerCase();
-            if (letters.includes(letterLower)){
-                console.log(letter)
-            }
-        }
-
-    </script>
-
 </html>
