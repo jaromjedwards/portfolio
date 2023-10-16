@@ -34,7 +34,7 @@ function startGame() {
     userInput.focus();
     const startTime = getTime();
     const sentence = getSentence();
-
+    
     userInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             const endTime = getTime();
