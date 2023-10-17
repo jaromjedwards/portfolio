@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="home-page.css">
+    <title>Dropdown Menu</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com">
 </head>
-<body onload="loadSite()">
-    <h1>Portfolio</h1>
-    <div id="dropdown-container.js"></div>
-    <!-- This div contains button, select, and option elements in javascript -->
-    <script src="home-page.js"></script>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+
+            <li><a href="#">Games</a>
+                <ul class="dropdown">
+                    <li><a href="games/hangman.html">Hangman</a></li>
+                    <li><a href="games/tic-tac-toe.html">Tic-tac-toe</a></li>
+                    <li><a href="games/speed-test.html">Speed Test</a></li>
+                    <li><a href="games/rock_paper_scissors.html">Rock Paper Scissors</a></li>
+                    <li><a href="games/wordle.html">Wordle</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Tools</a>
+                <ul class="dropdown">
+                    <label for="#"><a href="tools/calculator.html">Calculator</a></label>
+                </ul>
+            </li>
+            <li><a href="#">DJ</a>
+                <ul class="dropdown">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Reviews</a></li>
+                    <li><a href="#">Book</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 </body>
 </html>
