@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hangman</title>
 </head>
 <body>
     <h1>Hangman</h1>
-    <button onclick="startNewGame()">New Game</button>
-    <div id="button-container"></div>
-    <div id="word-display"></div>
-    <p id="guesses-left">Guesses left: <span id="guess-count">6</span></p>
-
-
-    <script src='scripts/hangman.js'></script>
+    <canvas id="canvas">CANVAS</canvas>
+    <ul id="alphabet">Buttons of the alphabet</ul>
+    <p id="display">_ _ _ _ _ _ </p>
+    <p id="guesses-left"># Guesses Left</p>
+    <p id="score">You win/lose</p>
+    <button id="start-button" onclick="startGame()">Start Game</button>
 </body>
 </html>
